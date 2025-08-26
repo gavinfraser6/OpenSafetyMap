@@ -55,20 +55,8 @@ export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Prop
     const map = L.map(containerRef.current, {
       maxZoom: 18,
       minZoom: 3,
-      zoomControl: false, // We'll add custom controls
-      attributionControl: false // We'll add custom attribution
+      zoomControl: true
     }).setView([-33.9249, 18.4241], 13);
-    
-    // Add zoom controls in a better position
-    L.control.zoom({
-      position: 'bottomright'
-    }).addTo(map);
-    
-    // Add attribution control
-    L.control.attribution({
-      position: 'bottomleft',
-      prefix: ''
-    }).addTo(map);
     mapRef.current = map;
 
     // Create marker cluster group
