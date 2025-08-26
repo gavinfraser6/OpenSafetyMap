@@ -2,49 +2,184 @@
 
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
+import "leaflet.markercluster";
+
+// Fix Leaflet marker icons
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: '/leaflet/marker-icon-2x.png',
+  iconUrl: '/leaflet/marker-icon.png',
+  shadowUrl: '/leaflet/marker-shadow.png',
+});
+
+// Extend the L object with MarkerClusterGroup
+declare module "leaflet" {
+  interface Layer {
+    cluster?: MarkerClusterGroup;
+  }
+}
+
+type Report = {
+  id: number;
+  category: string;
+  description: string;
+  location: string;
+  fileName: string | null;
+  timestamp: string;
+  latitude: number;
+  longitude: number;
+};
 
 type Props = {
   darkMode: boolean;
+  onMapClick?: (lat: number, lng: number) => void;
+  onLoadReports?: (reports: Report[]) => void;
 };
 
-export default function LeafletMap({ darkMode }: Props) {
+export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<any>(null);
-  const layerRef = useRef<any>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const layerRef = useRef<L.TileLayer | null>(null);
+  const markersRef = useRef<L.MarkerClusterGroup | null>(null);
+  const reportsCacheRef = useRef<Record<string, Report[]>>({});
 
   // Initialize map once
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    mapRef.current = L.map(containerRef.current).setView([37.7749, -122.4194], 12);
+    // Cape Town, South Africa coordinates: [-33.9249, 18.4241]
+    const map = L.map(containerRef.current, {
+      maxZoom: 18,
+      minZoom: 3,
+      zoomControl: true
+    }).setView([-33.9249, 18.4241], 13);
+    mapRef.current = map;
+
+    // Create marker cluster group
+    const markers = L.markerClusterGroup({
+      chunkedLoading: true,
+      maxClusterRadius: 50,
+    });
+    markersRef.current = markers;
+    map.addLayer(markers);
+
+    // Handle map clicks for report submission
+    map.on('click', (e: L.LeafletMouseEvent) => {
+      if (onMapClick) {
+        onMapClick(e.latlng.lat, e.latlng.lng);
+      }
+    });
+
+    // Load reports when map moves
+    const loadReportsInBounds = async () => {
+      if (!mapRef.current) return;
+      
+      try {
+        const bounds = mapRef.current.getBounds();
+        const boundsKey = `${bounds.getSouth().toFixed(4)}_${bounds.getWest().toFixed(4)}_${bounds.getNorth().toFixed(4)}_${bounds.getEast().toFixed(4)}`;
+        
+        // Check cache first
+        if (reportsCacheRef.current[boundsKey]) {
+          renderReports(reportsCacheRef.current[boundsKey]);
+          if (onLoadReports) onLoadReports(reportsCacheRef.current[boundsKey]);
+          return;
+        }
+        
+        const url = `/api/report?south=${bounds.getSouth()}&west=${bounds.getWest()}&north=${bounds.getNorth()}&east=${bounds.getEast()}`;
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.reports) {
+          // Cache the results
+          reportsCacheRef.current[boundsKey] = data.reports;
+          
+          renderReports(data.reports);
+          if (onLoadReports) onLoadReports(data.reports);
+        }
+      } catch (error) {
+        console.error("Failed to load reports:", error);
+      }
+    };
+
+    // Render reports on the map
+    const renderReports = (reports: Report[]) => {
+      if (!markersRef.current) return;
+      
+      // Clear existing markers
+      markersRef.current.clearLayers();
+      
+      // Add new markers
+      reports.forEach((report: Report) => {
+        const marker = L.marker([report.latitude, report.longitude]);
+        marker.bindPopup(`
+          <div class="report-popup">
+            <h3><strong>${report.category}</strong></h3>
+            <p>${report.description}</p>
+            <p><small><strong>Location:</strong> ${report.location}</small></p>
+            <p><small>${new Date(report.timestamp).toLocaleString()}</small></p>
+          </div>
+        `);
+        markersRef.current?.addLayer(marker);
+      });
+    };
+
+    // Load initial reports
+    loadReportsInBounds();
+
+    // Listen for map move events with debounce
+    let moveEndTimeout: NodeJS.Timeout;
+    map.on('moveend', () => {
+      clearTimeout(moveEndTimeout);
+      moveEndTimeout = setTimeout(loadReportsInBounds, 500);
+    });
+
+    // Add initial layer
+    const initialUrl = darkMode
+      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+
+    const initialLayer = L.tileLayer(initialUrl, {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    });
+    
+    layerRef.current = initialLayer;
+    initialLayer.addTo(map);
 
     return () => {
       // Cleanup on unmount
       if (mapRef.current) {
+        clearTimeout(moveEndTimeout);
+        mapRef.current.off('moveend');
+        mapRef.current.off('click');
         mapRef.current.remove();
         mapRef.current = null;
         layerRef.current = null;
+        markersRef.current = null;
       }
     };
   }, []);
 
   // Update base layer on theme change
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current || !layerRef.current) return;
 
-    if (layerRef.current) {
-      mapRef.current.removeLayer(layerRef.current);
-      layerRef.current = null;
-    }
+    // Remove current layer
+    mapRef.current.removeLayer(layerRef.current);
 
+    // Add new layer based on theme
     const url = darkMode
       ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
-    layerRef.current = L.tileLayer(url, {
+    const newLayer = L.tileLayer(url, {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(mapRef.current);
+    });
+    
+    layerRef.current = newLayer;
+    newLayer.addTo(mapRef.current);
   }, [darkMode]);
 
   return <div ref={containerRef} style={{ height: "100%", width: "100%" }} />;

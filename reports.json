@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1654321000000,
+    "category": "Hazard",
+    "description": "Pothole causing traffic issues",
+    "location": "Main Road near City Hall",
+    "fileName": null,
+    "timestamp": "2022-06-04T12:30:00.000Z",
+    "latitude": -33.9258,
+    "longitude": 18.4232
+  },
+  {
+    "id": 1654322000000,
+    "category": "Crime",
+    "description": "Burglary reported in residential area",
+    "location": "Rosebank neighborhood",
+    "fileName": null,
+    "timestamp": "2022-06-04T15:45:00.000Z",
+    "latitude": -33.9231,
+    "longitude": 18.4287
+  },
+  {
+    "id": 1654323000000,
+    "category": "Outage",
+    "description": "Power outage affecting several blocks",
+    "location": "Green Point area",
+    "fileName": null,
+    "timestamp": "2022-06-05T09:15:00.000Z",
+    "latitude": -33.9185,
+    "longitude": 18.4193
+  },
+  {
+    "id": 1654324000000,
+    "category": "Accident",
+    "description": "Car accident at intersection",
+    "location": "Adderley Street and Darling Street",
+    "fileName": null,
+    "timestamp": "2022-06-05T17:22:00.000Z",
+    "latitude": -33.9242,
+    "longitude": 18.4201
+  },
+  {
+    "id": 1654325000000,
+    "category": "Hazard",
+    "description": "Broken street light creating dark spot",
+    "location": "Kloof Street",
+    "fileName": null,
+    "timestamp": "2022-06-06T20:10:00.000Z",
+    "latitude": -33.9215,
+    "longitude": 18.4178
+  }
+]

@@ -3,7 +3,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { MapPin, Shield, Users, Code, Database, Globe, Moon, Sun, Plus } from "lucide-react";
+import { MapPin, Shield, Users, Code, Database, Globe, Moon, Sun, Plus, X, List } from "lucide-react";
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../components/ui/dialog";
@@ -12,13 +12,46 @@ import { Textarea } from "@/components/ui/textarea";
 
 const LeafletMap = dynamic(() => import("../components/LeafletMap"), { ssr: false });
 
-type FormState = { category: string; description: string; location: string };
+type Report = {
+  id: number;
+  category: string;
+  description: string;
+  location: string;
+  fileName: string | null;
+  timestamp: string;
+  latitude: number;
+  longitude: number;
+};
+
+type FormState = { 
+  category: string; 
+  description: string; 
+  location: string;
+  latitude: number;
+  longitude: number;
+};
 
 export default function HomePage() {
   const [darkMode, setDarkMode] = useState(false);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState<FormState>({ category: "", description: "", location: "" });
+  const [showReportsPanel, setShowReportsPanel] = useState(false);
+  const [form, setForm] = useState<FormState>({ 
+    category: "", 
+    description: "", 
+    location: "",
+    latitude: -33.9249,
+    longitude: 18.4241
+  });
   const [file, setFile] = useState<File | null>(null);
+  const [reports, setReports] = useState<Report[]>([]);
+
+  const handleMapClick = (lat: number, lng: number) => {
+    setForm(prev => ({
+      ...prev,
+      latitude: lat,
+      longitude: lng
+    }));
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,6 +64,8 @@ export default function HomePage() {
     data.append("category", form.category);
     data.append("description", form.description);
     data.append("location", form.location);
+    data.append("latitude", form.latitude.toString());
+    data.append("longitude", form.longitude.toString());
     if (file) data.append("file", file);
 
     await fetch("/api/report", {
@@ -39,8 +74,22 @@ export default function HomePage() {
     });
 
     setOpen(false);
-    setForm({ category: "", description: "", location: "" });
+    setForm({ 
+      category: "", 
+      description: "", 
+      location: "",
+      latitude: -33.9249,
+      longitude: 18.4241
+    });
     setFile(null);
+  };
+
+  const toggleReportsPanel = () => {
+    setShowReportsPanel(!showReportsPanel);
+  };
+
+  const handleLoadReports = (loadedReports: Report[]) => {
+    setReports(loadedReports);
   };
 
   return (
@@ -62,15 +111,73 @@ export default function HomePage() {
             Crowdsourced, open-source safety incident map. A community-driven platform to
             report, view, and track safety-related issues on an interactive map.
           </p>
-          <Button size="lg">Get Started</Button>
+          <div className="flex gap-4 justify-center">
+            <Button size="lg">Get Started</Button>
+            <Button size="lg" variant="outline" onClick={toggleReportsPanel}>
+              <List className="w-4 h-4 mr-2" />
+              {showReportsPanel ? "Hide Reports" : "View Reports"}
+            </Button>
+          </div>
         </motion.div>
       </section>
 
-      {/* Interactive Map Preview */}
+      {/* Interactive Map with Reports Panel */}
       <section className="relative py-12 px-6 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center">🗺️ Interactive Map Preview</h2>
-        <div className="h-96 rounded-2xl overflow-hidden shadow-lg">
-          <LeafletMap darkMode={darkMode} />
+        <h2 className="text-3xl font-bold mb-6 text-center">🗺️ Interactive Safety Map</h2>
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Map Container */}
+          <div className="flex-1 h-96 lg:h-[600px] rounded-2xl overflow-hidden shadow-lg relative">
+            <LeafletMap 
+              darkMode={darkMode} 
+              onMapClick={handleMapClick} 
+              onLoadReports={handleLoadReports} 
+            />
+            {/* Click Instruction Overlay */}
+            <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 px-3 py-2 rounded-lg text-sm shadow">
+              Click on map to set report location
+            </div>
+            {/* Reports Counter */}
+            <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 px-3 py-2 rounded-lg text-sm shadow">
+              {reports.length} reports in view
+            </div>
+          </div>
+          
+          {/* Reports Panel */}
+          {showReportsPanel && (
+            <div className="w-full lg:w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 h-96 lg:h-[600px] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-bold text-lg">Recent Reports</h3>
+                <Button variant="ghost" size="icon" onClick={toggleReportsPanel}>
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+              <div className="space-y-3">
+                {reports.length === 0 ? (
+                  <div className="text-center py-8">
+                    <MapPin className="w-12 h-12 mx-auto text-gray-400" />
+                    <p className="text-gray-500 mt-2">No reports in current view</p>
+                    <p className="text-gray-400 text-sm mt-1">Pan or zoom to load reports</p>
+                  </div>
+                ) : (
+                  [...reports].reverse().map(report => (
+                    <div key={report.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                      <div className="flex justify-between">
+                        <span className="font-medium">{report.category}</span>
+                        <span className="text-xs text-gray-500">
+                          {new Date(report.timestamp).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <p className="text-sm mt-1 text-gray-700 dark:text-gray-300">{report.description}</p>
+                      <p className="text-xs mt-2 text-gray-500">{report.location}</p>
+                      <div className="text-xs mt-1 text-gray-400">
+                        {report.latitude.toFixed(6)}, {report.longitude.toFixed(6)}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -154,17 +261,43 @@ export default function HomePage() {
 
       {/* Report Incident Modal */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+        <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Report an Incident</DialogTitle>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <Input name="category" value={form.category} onChange={handleChange} placeholder="Category (e.g., Crime, Hazard, Outage)" />
-            <Textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" />
-            <Input name="location" value={form.location} onChange={handleChange} placeholder="Location" />
-            <Input type="file" onChange={(e) => setFile((e.target as HTMLInputElement).files?.[0] ?? null)} />
+            <Input 
+              name="category" 
+              value={form.category} 
+              onChange={handleChange} 
+              placeholder="Category (e.g., Crime, Hazard, Outage)" 
+              required
+            />
+            <Textarea 
+              name="description" 
+              value={form.description} 
+              onChange={handleChange} 
+              placeholder="Description" 
+              required
+            />
+            <Input 
+              name="location" 
+              value={form.location} 
+              onChange={handleChange} 
+              placeholder="Location details" 
+            />
+            <div className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 p-3 rounded">
+              <p className="font-medium">Map Coordinates</p>
+              <p>Latitude: {form.latitude.toFixed(6)}</p>
+              <p>Longitude: {form.longitude.toFixed(6)}</p>
+              <p className="text-xs mt-1">Click on the map to set the exact location</p>
+            </div>
+            <Input 
+              type="file" 
+              onChange={(e) => setFile((e.target as HTMLInputElement).files?.[0] ?? null)} 
+            />
             <DialogFooter className="mt-4">
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Submit Report</Button>
             </DialogFooter>
           </form>
         </DialogContent>

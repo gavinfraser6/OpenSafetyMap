@@ -1,1 +1,1 @@
-declare module "leaflet";
+import "leaflet.markercluster";
