@@ -31,12 +31,11 @@ type Report = {
 };
 
 type Props = {
-  darkMode: boolean;
   onMapClick?: (lat: number, lng: number) => void;
   onLoadReports?: (reports: Report[]) => void;
 };
 
-export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Props) {
+export default function LeafletMap({ onMapClick, onLoadReports }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.TileLayer | null>(null);
@@ -161,9 +160,7 @@ export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Prop
     });
 
     // Add initial layer
-    const initialUrl = darkMode
-      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-      : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    const initialUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
     const initialLayer = L.tileLayer(initialUrl, {
       attribution:
@@ -190,27 +187,6 @@ export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Prop
       }
     };
   }, []);
-
-  // Update base layer on theme change
-  useEffect(() => {
-    if (!isClient || !mapRef.current || !layerRef.current) return;
-
-    // Remove current layer
-    mapRef.current.removeLayer(layerRef.current);
-
-    // Add new layer based on theme
-    const url = darkMode
-      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-      : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-
-    const newLayer = L.tileLayer(url, {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    });
-    
-    layerRef.current = newLayer;
-    newLayer.addTo(mapRef.current);
-  }, [darkMode, isClient]);
 
   // Only render the map container on the client
   if (!isClient) {

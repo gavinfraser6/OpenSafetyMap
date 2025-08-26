@@ -3,7 +3,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { MapPin, Shield, Users, Code, Database, Globe, Moon, Sun, Plus, X, List, Info } from "lucide-react";
+import { MapPin, Shield, Plus, X, List, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,6 @@ type FormState = {
 };
 
 export default function HomePage() {
-  const [darkMode, setDarkMode] = useState(false);
   const [open, setOpen] = useState(false);
   const [showReportsPanel, setShowReportsPanel] = useState(false);
   const [form, setForm] = useState<FormState>({ 
@@ -92,7 +91,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className={`${darkMode ? "dark bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"} h-screen w-screen overflow-hidden`}>
+    <div className="h-screen w-screen overflow-hidden">
       {/* Top Bar with Icons */}
       <div className="absolute top-0 left-0 right-0 z-[1001] flex justify-between items-center p-4">
         {/* Logo and Title */}
@@ -108,9 +107,6 @@ export default function HomePage() {
               <Info className="w-5 h-5" />
             </Button>
           </Link>
-          <Button variant="outline" size="icon" onClick={() => setDarkMode(!darkMode)} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </Button>
           <Button variant="outline" size="icon" onClick={toggleReportsPanel} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
             <List className="w-5 h-5" />
           </Button>
@@ -120,7 +116,6 @@ export default function HomePage() {
       {/* Map Container - Full Screen */}
       <div className="absolute inset-0">
         <LeafletMap 
-          darkMode={darkMode} 
           onMapClick={handleMapClick} 
           onLoadReports={handleLoadReports} 
         />
@@ -149,11 +144,11 @@ export default function HomePage() {
       {showReportsPanel && (
         <div className="absolute top-16 right-4 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 h-[calc(100vh-100px)] overflow-y-auto border-2 border-gray-300 dark:border-gray-700 z-[1001]">
           <div className="flex justify-between items-center mb-4">
-                <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">Recent Reports</h3>
-                <Button variant="ghost" size="icon" onClick={toggleReportsPanel}>
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
+            <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">Recent Reports</h3>
+            <Button variant="ghost" size="icon" onClick={toggleReportsPanel}>
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
           <div className="space-y-3">
             {reports.length === 0 ? (
               <div className="text-center py-8">
