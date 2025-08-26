@@ -16,12 +16,12 @@ type DialogRootProps = {
 export function Dialog({ open, onOpenChange, children }: DialogRootProps) {
   if (!open) return null;
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-[1050] flex items-center justify-center">
       <div
         className="absolute inset-0 bg-black/50"
         onClick={() => onOpenChange?.(false)}
       />
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-[1060]">{children}</div>
     </div>,
     document.body
   );
@@ -43,7 +43,7 @@ export function DialogContent({ className, ...props }: DivProps) {
       role="dialog"
       aria-modal="true"
       className={cn(
-        "w-full max-w-lg rounded-lg bg-white dark:bg-gray-900 p-6 shadow-lg border border-gray-200 dark:border-gray-800",
+        "w-full max-w-lg rounded-lg bg-white dark:bg-gray-900 p-6 shadow-lg border-2 border-gray-300 dark:border-gray-700",
         className
       )}
       {...props}
@@ -56,7 +56,7 @@ export function DialogHeader({ className, ...props }: DivProps) {
 }
 
 export function DialogTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h3 className={cn("text-lg font-semibold", className)} {...props} />;
+  return <h3 className={cn("text-lg font-semibold text-gray-900 dark:text-white", className)} {...props} />;
 }
 
 export function DialogFooter({ className, ...props }: DivProps) {

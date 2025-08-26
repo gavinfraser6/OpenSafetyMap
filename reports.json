@@ -1,52 +1,922 @@
 [
   {
-    "id": 1654321000000,
-    "category": "Hazard",
-    "description": "Pothole causing traffic issues",
-    "location": "Main Road near City Hall",
+    "id": 1716559200000,
+    "category": "Infrastructure",
+    "description": "Roadworks causing major delays on the A1 motorway.",
+    "location": "A1 Motorway, Tirana, Albania",
     "fileName": null,
-    "timestamp": "2022-06-04T12:30:00.000Z",
-    "latitude": -33.9258,
-    "longitude": 18.4232
+    "timestamp": "2024-05-24T14:00:00.000Z",
+    "latitude": 41.3275,
+    "longitude": 19.8187
   },
   {
-    "id": 1654322000000,
-    "category": "Crime",
-    "description": "Burglary reported in residential area",
-    "location": "Rosebank neighborhood",
-    "fileName": null,
-    "timestamp": "2022-06-04T15:45:00.000Z",
-    "latitude": -33.9231,
-    "longitude": 18.4287
-  },
-  {
-    "id": 1654323000000,
-    "category": "Outage",
-    "description": "Power outage affecting several blocks",
-    "location": "Green Point area",
-    "fileName": null,
-    "timestamp": "2022-06-05T09:15:00.000Z",
-    "latitude": -33.9185,
-    "longitude": 18.4193
-  },
-  {
-    "id": 1654324000000,
+    "id": 1716562800000,
     "category": "Accident",
-    "description": "Car accident at intersection",
-    "location": "Adderley Street and Darling Street",
+    "description": "Fender bender causing traffic backup near La Recoleta Cemetery.",
+    "location": "Recoleta, Buenos Aires, Argentina",
     "fileName": null,
-    "timestamp": "2022-06-05T17:22:00.000Z",
-    "latitude": -33.9242,
-    "longitude": 18.4201
+    "timestamp": "2024-05-24T15:00:00.000Z",
+    "latitude": -34.5889,
+    "longitude": -58.3917
   },
   {
-    "id": 1654325000000,
+    "id": 1716566400000,
+    "category": "Social",
+    "description": "Large street market causing pedestrian congestion.",
+    "location": "Federation Square, Melbourne, Australia",
+    "fileName": "market_crowd.jpg",
+    "timestamp": "2024-05-24T16:00:00.000Z",
+    "latitude": -37.8179,
+    "longitude": 144.9691
+  },
+  {
+    "id": 1716570000000,
     "category": "Hazard",
-    "description": "Broken street light creating dark spot",
-    "location": "Kloof Street",
+    "description": "Icy patch on the sidewalk near the Hofburg Palace.",
+    "location": "Hofburg, Vienna, Austria",
     "fileName": null,
-    "timestamp": "2022-06-06T20:10:00.000Z",
-    "latitude": -33.9215,
-    "longitude": 18.4178
+    "timestamp": "2024-05-24T17:00:00.000Z",
+    "latitude": 48.2078,
+    "longitude": 16.3658
+  },
+  {
+    "id": 1716573600000,
+    "category": "Traffic",
+    "description": "Heavy traffic on the Dhaka-Mymensingh Highway.",
+    "location": "Uttara, Dhaka, Bangladesh",
+    "fileName": null,
+    "timestamp": "2024-05-24T18:00:00.000Z",
+    "latitude": 23.8759,
+    "longitude": 90.3795
+  },
+  {
+    "id": 1716577200000,
+    "category": "Outage",
+    "description": "Traffic light malfunction at the Grand Place.",
+    "location": "Grand Place, Brussels, Belgium",
+    "fileName": null,
+    "timestamp": "2024-05-24T19:00:00.000Z",
+    "latitude": 50.8467,
+    "longitude": 4.3525
+  },
+  {
+    "id": 1716580800000,
+    "category": "Accident",
+    "description": "Bus breakdown on Avenida Paulista causing delays.",
+    "location": "Avenida Paulista, São Paulo, Brazil",
+    "fileName": null,
+    "timestamp": "2024-05-24T20:00:00.000Z",
+    "latitude": -23.5613,
+    "longitude": -46.6565
+  },
+  {
+    "id": 1716584400000,
+    "category": "Crime",
+    "description": "Theft reported from a car parked near Christ the Redeemer.",
+    "location": "Corcovado Mountain, Rio de Janeiro, Brazil",
+    "fileName": null,
+    "timestamp": "2024-05-24T21:00:00.000Z",
+    "latitude": -22.9519,
+    "longitude": -43.2105
+  },
+  {
+    "id": 1716588000000,
+    "category": "Infrastructure",
+    "description": "Water pipe leak reported in Vitosha Boulevard.",
+    "location": "Vitosha Boulevard, Sofia, Bulgaria",
+    "fileName": null,
+    "timestamp": "2024-05-24T22:00:00.000Z",
+    "latitude": 42.6931,
+    "longitude": 23.32
+  },
+  {
+    "id": 1716591600000,
+    "category": "Hazard",
+    "description": "Fallen tree branch blocking bike path in Stanley Park.",
+    "location": "Stanley Park, Vancouver, Canada",
+    "fileName": "fallen_branch.jpg",
+    "timestamp": "2024-05-24T23:00:00.000Z",
+    "latitude": 49.3043,
+    "longitude": -123.1444
+  },
+  {
+    "id": 1716595200000,
+    "category": "Traffic",
+    "description": "Heavy congestion on the Gardiner Expressway eastbound.",
+    "location": "Gardiner Expressway, Toronto, Canada",
+    "fileName": null,
+    "timestamp": "2024-05-25T00:00:00.000Z",
+    "latitude": 43.6393,
+    "longitude": -79.3953
+  },
+  {
+    "id": 1716598800000,
+    "category": "Accident",
+    "description": "Minor car accident near Costanera Center.",
+    "location": "Providencia, Santiago, Chile",
+    "fileName": null,
+    "timestamp": "2024-05-25T01:00:00.000Z",
+    "latitude": -33.4173,
+    "longitude": -70.6062
+  },
+  {
+    "id": 1716602400000,
+    "category": "Environment",
+    "description": "High air pollution levels reported in the Wangfujing area.",
+    "location": "Wangfujing, Beijing, China",
+    "fileName": null,
+    "timestamp": "2024-05-25T02:00:00.000Z",
+    "latitude": 39.9139,
+    "longitude": 116.4039
+  },
+  {
+    "id": 1716606000000,
+    "category": "Infrastructure",
+    "description": "Metro Line 2 experiencing delays near People's Square.",
+    "location": "People's Square, Shanghai, China",
+    "fileName": null,
+    "timestamp": "2024-05-25T03:00:00.000Z",
+    "latitude": 31.2317,
+    "longitude": 121.4747
+  },
+  {
+    "id": 1716609600000,
+    "category": "Traffic",
+    "description": "Heavy traffic around Bolívar Square.",
+    "location": "La Candelaria, Bogotá, Colombia",
+    "fileName": null,
+    "timestamp": "2024-05-25T04:00:00.000Z",
+    "latitude": 4.5981,
+    "longitude": -74.076
+  },
+  {
+    "id": 1716613200000,
+    "category": "Hazard",
+    "description": "Uneven pavement causing trip hazard in Zagreb's main square.",
+    "location": "Ban Jelačić Square, Zagreb, Croatia",
+    "fileName": null,
+    "timestamp": "2024-05-25T05:00:00.000Z",
+    "latitude": 45.8131,
+    "longitude": 15.9772
+  },
+  {
+    "id": 1716616800000,
+    "category": "Outage",
+    "description": "Streetlight out in Old Town Square.",
+    "location": "Old Town Square, Prague, Czech Republic",
+    "fileName": null,
+    "timestamp": "2024-05-25T06:00:00.000Z",
+    "latitude": 50.0878,
+    "longitude": 14.4205
+  },
+  {
+    "id": 1716620400000,
+    "category": "Lost & Found",
+    "description": "Found a wallet on a bench in Tivoli Gardens.",
+    "location": "Tivoli Gardens, Copenhagen, Denmark",
+    "fileName": null,
+    "timestamp": "2024-05-25T07:00:00.000Z",
+    "latitude": 55.6734,
+    "longitude": 12.5686
+  },
+  {
+    "id": 1716624000000,
+    "category": "Traffic",
+    "description": "Gridlock traffic near the Khan el-Khalili market.",
+    "location": "Islamic Cairo, Cairo, Egypt",
+    "fileName": null,
+    "timestamp": "2024-05-25T08:00:00.000Z",
+    "latitude": 30.0478,
+    "longitude": 31.2622
+  },
+  {
+    "id": 1716627600000,
+    "category": "Infrastructure",
+    "description": "Ferry service to Suomenlinna is delayed due to technical issues.",
+    "location": "Market Square, Helsinki, Finland",
+    "fileName": null,
+    "timestamp": "2024-05-25T09:00:00.000Z",
+    "latitude": 60.1675,
+    "longitude": 24.9526
+  },
+  {
+    "id": 1716631200000,
+    "category": "Crime",
+    "description": "Pickpocketing reported near the Louvre Pyramid.",
+    "location": "Louvre Museum, Paris, France",
+    "fileName": null,
+    "timestamp": "2024-05-25T10:00:00.000Z",
+    "latitude": 48.8606,
+    "longitude": 2.3376
+  },
+  {
+    "id": 1716634800000,
+    "category": "Outage",
+    "description": "S-Bahn signal failure at Alexanderplatz station.",
+    "location": "Alexanderplatz, Berlin, Germany",
+    "fileName": null,
+    "timestamp": "2024-05-25T11:00:00.000Z",
+    "latitude": 52.5219,
+    "longitude": 13.4132
+  },
+  {
+    "id": 1716638400000,
+    "category": "Accident",
+    "description": "Minor scooter accident in the Plaka district.",
+    "location": "Plaka, Athens, Greece",
+    "fileName": null,
+    "timestamp": "2024-05-25T12:00:00.000Z",
+    "latitude": 37.9725,
+    "longitude": 23.7308
+  },
+  {
+    "id": 1716642000000,
+    "category": "Hazard",
+    "description": "Broken pavement on a busy street near Heroes' Square.",
+    "location": "Andrássy Avenue, Budapest, Hungary",
+    "fileName": null,
+    "timestamp": "2024-05-25T13:00:00.000Z",
+    "latitude": 47.5152,
+    "longitude": 19.0765
+  },
+  {
+    "id": 1716645600000,
+    "category": "Social",
+    "description": "Street performers attracting large crowds, blocking sidewalk.",
+    "location": "Laugavegur, Reykjavík, Iceland",
+    "fileName": null,
+    "timestamp": "2024-05-25T14:00:00.000Z",
+    "latitude": 64.1459,
+    "longitude": -21.9262
+  },
+  {
+    "id": 1716649200000,
+    "category": "Traffic",
+    "description": "Severe traffic congestion around India Gate.",
+    "location": "India Gate, New Delhi, India",
+    "fileName": null,
+    "timestamp": "2024-05-25T15:00:00.000Z",
+    "latitude": 28.6129,
+    "longitude": 77.2295
+  },
+  {
+    "id": 1716652800000,
+    "category": "Outage",
+    "description": "Power cuts reported in Koramangala area.",
+    "location": "Koramangala, Bengaluru, India",
+    "fileName": null,
+    "timestamp": "2024-05-25T16:00:00.000Z",
+    "latitude": 12.9352,
+    "longitude": 77.6245
+  },
+  {
+    "id": 1716656400000,
+    "category": "Hazard",
+    "description": "Flooding on Jalan Thamrin after heavy rain.",
+    "location": "Jalan M.H. Thamrin, Jakarta, Indonesia",
+    "fileName": null,
+    "timestamp": "2024-05-25T17:00:00.000Z",
+    "latitude": -6.1912,
+    "longitude": 106.8225
+  },
+  {
+    "id": 1716660000000,
+    "category": "Social",
+    "description": "Large queue for a concert outside the 3Arena.",
+    "location": "North Wall Quay, Dublin, Ireland",
+    "fileName": null,
+    "timestamp": "2024-05-25T18:00:00.000Z",
+    "latitude": 53.348,
+    "longitude": -6.2287
+  },
+  {
+    "id": 1716663600000,
+    "category": "Infrastructure",
+    "description": "Broken water fountain near the Spanish Steps.",
+    "location": "Piazza di Spagna, Rome, Italy",
+    "fileName": null,
+    "timestamp": "2024-05-25T19:00:00.000Z",
+    "latitude": 41.9056,
+    "longitude": 12.4823
+  },
+  {
+    "id": 1716667200000,
+    "category": "Accident",
+    "description": "Minor collision involving a tourist bus in Shinjuku.",
+    "location": "Shinjuku Gyoen National Garden, Tokyo, Japan",
+    "fileName": null,
+    "timestamp": "2024-05-25T20:00:00.000Z",
+    "latitude": 35.6852,
+    "longitude": 139.7101
+  },
+  {
+    "id": 1716670800000,
+    "category": "Social",
+    "description": "Overcrowding reported at Fushimi Inari Shrine.",
+    "location": "Fushimi Inari Shrine, Kyoto, Japan",
+    "fileName": "crowd_at_shrine.png",
+    "timestamp": "2024-05-25T21:00:00.000Z",
+    "latitude": 34.9671,
+    "longitude": 135.7727
+  },
+  {
+    "id": 1716674400000,
+    "category": "Crime",
+    "description": "Report of reckless driving by a matatu on Uhuru Highway.",
+    "location": "Uhuru Highway, Nairobi, Kenya",
+    "fileName": null,
+    "timestamp": "2024-05-25T22:00:00.000Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219
+  },
+  {
+    "id": 1716678000000,
+    "category": "Environment",
+    "description": "Noise complaint from a construction site near KLCC Park.",
+    "location": "Kuala Lumpur City Centre, Kuala Lumpur, Malaysia",
+    "fileName": null,
+    "timestamp": "2024-05-25T23:00:00.000Z",
+    "latitude": 3.1556,
+    "longitude": 101.7144
+  },
+  {
+    "id": 1716681600000,
+    "category": "Traffic",
+    "description": "Road closure for a parade in the Zócalo.",
+    "location": "Zócalo, Mexico City, Mexico",
+    "fileName": null,
+    "timestamp": "2024-05-26T00:00:00.000Z",
+    "latitude": 19.4326,
+    "longitude": -99.1332
+  },
+  {
+    "id": 1716685200000,
+    "category": "Hazard",
+    "description": "Crowded souk making passage difficult in Djemaa el-Fna.",
+    "location": "Djemaa el-Fna, Marrakech, Morocco",
+    "fileName": null,
+    "timestamp": "2024-05-26T01:00:00.000Z",
+    "latitude": 31.6258,
+    "longitude": -7.9892
+  },
+  {
+    "id": 1716688800000,
+    "category": "Hazard",
+    "description": "Blocked bicycle lane near Amsterdam Centraal.",
+    "location": "Amsterdam Centraal station, Amsterdam, Netherlands",
+    "fileName": null,
+    "timestamp": "2024-05-26T02:00:00.000Z",
+    "latitude": 52.3792,
+    "longitude": 4.9002
+  },
+  {
+    "id": 1716692400000,
+    "category": "Social",
+    "description": "Freedom campers causing a local disturbance.",
+    "location": "Lake Wakatipu, Queenstown, New Zealand",
+    "fileName": null,
+    "timestamp": "2024-05-26T03:00:00.000Z",
+    "latitude": -45.0312,
+    "longitude": 168.6626
+  },
+  {
+    "id": 1716696000000,
+    "category": "Hazard",
+    "description": "Flooding after heavy rainfall on Victoria Island.",
+    "location": "Victoria Island, Lagos, Nigeria",
+    "fileName": "vi_flooding.mov",
+    "timestamp": "2024-05-26T04:00:00.000Z",
+    "latitude": 6.4281,
+    "longitude": 3.4218
+  },
+  {
+    "id": 1716699600000,
+    "category": "Social",
+    "description": "Large tour group blocking the view at Vigeland Park.",
+    "location": "Vigeland Park, Oslo, Norway",
+    "fileName": null,
+    "timestamp": "2024-05-26T05:00:00.000Z",
+    "latitude": 59.9264,
+    "longitude": 10.7014
+  },
+  {
+    "id": 1716703200000,
+    "category": "Traffic",
+    "description": "Rickshaw blocking traffic in Saddar Town.",
+    "location": "Saddar Town, Karachi, Pakistan",
+    "fileName": null,
+    "timestamp": "2024-05-26T06:00:00.000Z",
+    "latitude": 24.8607,
+    "longitude": 67.0011
+  },
+  {
+    "id": 1716706800000,
+    "category": "Accident",
+    "description": "Bus collision in the Miraflores district.",
+    "location": "Miraflores, Lima, Peru",
+    "fileName": null,
+    "timestamp": "2024-05-26T07:00:00.000Z",
+    "latitude": -12.1216,
+    "longitude": -77.0298
+  },
+  {
+    "id": 1716710400000,
+    "category": "Infrastructure",
+    "description": "MRT Yellow Line experiencing temporary service disruption.",
+    "location": "Makati CBD, Manila, Philippines",
+    "fileName": null,
+    "timestamp": "2024-05-26T08:00:00.000Z",
+    "latitude": 14.5547,
+    "longitude": 121.0244
+  },
+  {
+    "id": 1716714000000,
+    "category": "Hazard",
+    "description": "Broken paving stone in the Main Market Square.",
+    "location": "Main Market Square, Kraków, Poland",
+    "fileName": null,
+    "timestamp": "2024-05-26T09:00:00.000Z",
+    "latitude": 50.0619,
+    "longitude": 19.9368
+  },
+  {
+    "id": 1716717600000,
+    "category": "Accident",
+    "description": "Tram involved in a minor collision near Belém Tower.",
+    "location": "Belém, Lisbon, Portugal",
+    "fileName": null,
+    "timestamp": "2024-05-26T10:00:00.000Z",
+    "latitude": 38.6916,
+    "longitude": -9.216
+  },
+  {
+    "id": 1716721200000,
+    "category": "Infrastructure",
+    "description": "Construction noise near the Palace of the Parliament.",
+    "location": "Palace of the Parliament, Bucharest, Romania",
+    "fileName": null,
+    "timestamp": "2024-05-26T11:00:00.000Z",
+    "latitude": 44.4273,
+    "longitude": 26.0873
+  },
+  {
+    "id": 1716724800000,
+    "category": "Crime",
+    "description": "Suspicious person reported near the Kremlin.",
+    "location": "Red Square, Moscow, Russia",
+    "fileName": null,
+    "timestamp": "2024-05-26T12:00:00.000Z",
+    "latitude": 55.7539,
+    "longitude": 37.6208
+  },
+  {
+    "id": 1716728400000,
+    "category": "Environment",
+    "description": "Illegal dumping observed near the Corniche.",
+    "location": "Jeddah Corniche, Jeddah, Saudi Arabia",
+    "fileName": null,
+    "timestamp": "2024-05-26T13:00:00.000Z",
+    "latitude": 21.5433,
+    "longitude": 39.1728
+  },
+  {
+    "id": 1716732000000,
+    "category": "Infrastructure",
+    "description": "Escalator out of service at Marina Bay Sands station.",
+    "location": "Marina Bay, Singapore",
+    "fileName": null,
+    "timestamp": "2024-05-26T14:00:00.000Z",
+    "latitude": 1.2839,
+    "longitude": 103.8596
+  },
+  {
+    "id": 1716735600000,
+    "category": "Outage",
+    "description": "Scheduled power outage (load shedding) in Sandton area.",
+    "location": "Sandton, Johannesburg, South Africa",
+    "fileName": "loadshedding_schedule.pdf",
+    "timestamp": "2024-05-26T15:00:00.000Z",
+    "latitude": -26.1076,
+    "longitude": 28.0567
+  },
+  {
+    "id": 1716739200000,
+    "category": "Environment",
+    "description": "High fine dust warning in Myeongdong.",
+    "location": "Myeongdong, Seoul, South Korea",
+    "fileName": null,
+    "timestamp": "2024-05-26T16:00:00.000Z",
+    "latitude": 37.5634,
+    "longitude": 126.9823
+  },
+  {
+    "id": 1716742800000,
+    "category": "Crime",
+    "description": "Bag snatching reported on Las Ramblas.",
+    "location": "Las Ramblas, Barcelona, Spain",
+    "fileName": null,
+    "timestamp": "2024-05-26T17:00:00.000Z",
+    "latitude": 41.3814,
+    "longitude": 2.1728
+  },
+  {
+    "id": 1716746400000,
+    "category": "Hazard",
+    "description": "Debris on road near Galle Face Green.",
+    "location": "Colombo, Sri Lanka",
+    "fileName": null,
+    "timestamp": "2024-05-26T18:00:00.000Z",
+    "latitude": 6.9271,
+    "longitude": 79.8612
+  },
+  {
+    "id": 1716750000000,
+    "category": "Traffic",
+    "description": "Ferry services in Gamla Stan are delayed.",
+    "location": "Gamla Stan, Stockholm, Sweden",
+    "fileName": null,
+    "timestamp": "2024-05-26T19:00:00.000Z",
+    "latitude": 59.3251,
+    "longitude": 18.0711
+  },
+  {
+    "id": 1716753600000,
+    "category": "Accident",
+    "description": "Cyclist and pedestrian collision near Lake Geneva.",
+    "location": "Quai du Mont-Blanc, Geneva, Switzerland",
+    "fileName": null,
+    "timestamp": "2024-05-26T20:00:00.000Z",
+    "latitude": 46.2091,
+    "longitude": 6.1517
+  },
+  {
+    "id": 1716757200000,
+    "category": "Traffic",
+    "description": "Motorbike congestion in the Old Quarter.",
+    "location": "Hoan Kiem District, Hanoi, Vietnam",
+    "fileName": null,
+    "timestamp": "2024-05-26T21:00:00.000Z",
+    "latitude": 21.0333,
+    "longitude": 105.85
+  },
+  {
+    "id": 1716760800000,
+    "category": "Hazard",
+    "description": "Street food vendor blocking sidewalk on Sukhumvit Road.",
+    "location": "Sukhumvit, Bangkok, Thailand",
+    "fileName": null,
+    "timestamp": "2024-05-26T22:00:00.000Z",
+    "latitude": 13.7382,
+    "longitude": 100.5837
+  },
+  {
+    "id": 1716764400000,
+    "category": "Social",
+    "description": "Massive crowd gathering in Taksim Square for a rally.",
+    "location": "Taksim Square, Istanbul, Turkey",
+    "fileName": null,
+    "timestamp": "2024-05-26T23:00:00.000Z",
+    "latitude": 41.037,
+    "longitude": 28.9763
+  },
+  {
+    "id": 1716768000000,
+    "category": "Infrastructure",
+    "description": "Road closure near Maidan Nezalezhnosti for maintenance.",
+    "location": "Maidan Nezalezhnosti, Kyiv, Ukraine",
+    "fileName": null,
+    "timestamp": "2024-05-27T00:00:00.000Z",
+    "latitude": 50.4501,
+    "longitude": 30.5234
+  },
+  {
+    "id": 1716771600000,
+    "category": "Accident",
+    "description": "Car abandoned in the fast lane on Sheikh Zayed Road.",
+    "location": "Sheikh Zayed Road, Dubai, UAE",
+    "fileName": null,
+    "timestamp": "2024-05-27T01:00:00.000Z",
+    "latitude": 25.2048,
+    "longitude": 55.2708
+  },
+  {
+    "id": 1716775200000,
+    "category": "Accident",
+    "description": "Minor collision on Westminster Bridge.",
+    "location": "Westminster Bridge, London, UK",
+    "fileName": null,
+    "timestamp": "2024-05-27T02:00:00.000Z",
+    "latitude": 51.5007,
+    "longitude": -0.1221
+  },
+  {
+    "id": 1716778800000,
+    "category": "Hazard",
+    "description": "Loose cobblestone on the Royal Mile posing a trip hazard.",
+    "location": "Royal Mile, Edinburgh, UK",
+    "fileName": null,
+    "timestamp": "2024-05-27T03:00:00.000Z",
+    "latitude": 55.9504,
+    "longitude": -3.1852
+  },
+  {
+    "id": 1716782400000,
+    "category": "Infrastructure",
+    "description": "Subway service on the L train is suspended due to signal problems.",
+    "location": "Union Square Station, New York, USA",
+    "fileName": null,
+    "timestamp": "2024-05-27T04:00:00.000Z",
+    "latitude": 40.7359,
+    "longitude": -73.9904
+  },
+  {
+    "id": 1716786000000,
+    "category": "Hazard",
+    "description": "Large pothole on Hollywood Boulevard.",
+    "location": "Hollywood, Los Angeles, USA",
+    "fileName": "hollywood_pothole.jpg",
+    "timestamp": "2024-05-27T05:00:00.000Z",
+    "latitude": 34.1016,
+    "longitude": -118.3283
+  },
+  {
+    "id": 1716789600000,
+    "category": "Crime",
+    "description": "Car break-in reported near Millennium Park.",
+    "location": "The Loop, Chicago, USA",
+    "fileName": null,
+    "timestamp": "2024-05-27T06:00:00.000Z",
+    "latitude": 41.8827,
+    "longitude": -87.6234
+  },
+  {
+    "id": 1716790000000,
+    "category": "Outage",
+    "description": "Stage 4 load shedding scheduled for the City Bowl area from 10:00.",
+    "location": "Gardens, Cape Town",
+    "fileName": "loadshedding_schedule_ct.pdf",
+    "timestamp": "2024-05-27T07:00:00.000Z",
+    "latitude": -33.9333,
+    "longitude": 18.4144
+  },
+  {
+    "id": 1716790800000,
+    "category": "Traffic",
+    "description": "Heavy congestion on Nelson Mandela Blvd inbound due to early morning rush.",
+    "location": "Nelson Mandela Boulevard, Woodstock",
+    "fileName": null,
+    "timestamp": "2024-05-27T07:20:00.000Z",
+    "latitude": -33.9261,
+    "longitude": 18.4475
+  },
+  {
+    "id": 1716791400000,
+    "category": "Accident",
+    "description": "Minor collision at the intersection of Buitengracht and Strand Street.",
+    "location": "Buitengracht Street, CBD",
+    "fileName": null,
+    "timestamp": "2024-05-27T07:30:00.000Z",
+    "latitude": -33.9184,
+    "longitude": 18.4192
+  },
+  {
+    "id": 1716792000000,
+    "category": "Infrastructure",
+    "description": "Metrorail train from Khayelitsha running 25 minutes late due to signal issues.",
+    "location": "Cape Town Station",
+    "fileName": null,
+    "timestamp": "2024-05-27T07:40:00.000Z",
+    "latitude": -33.9208,
+    "longitude": 18.4249
+  },
+  {
+    "id": 1716793200000,
+    "category": "Crime",
+    "description": "Smash-and-grab reported on the N2 outbound near the airport.",
+    "location": "N2 Highway, near CTIA",
+    "fileName": null,
+    "timestamp": "2024-05-27T08:00:00.000Z",
+    "latitude": -33.9654,
+    "longitude": 18.5771
+  },
+  {
+    "id": 1716794400000,
+    "category": "Hazard",
+    "description": "Large pothole in the left lane of the M3 Southbound before UCT.",
+    "location": "M3 Highway, Rondebosch",
+    "fileName": "M3_pothole_2705.jpg",
+    "timestamp": "2024-05-27T08:20:00.000Z",
+    "latitude": -33.955,
+    "longitude": 18.4682
+  },
+  {
+    "id": 1716795600000,
+    "category": "Lost & Found",
+    "description": "Found a set of car keys on a bench in the Company's Garden.",
+    "location": "Company's Garden, CBD",
+    "fileName": null,
+    "timestamp": "2024-05-27T08:40:00.000Z",
+    "latitude": -33.9275,
+    "longitude": 18.4168
+  },
+  {
+    "id": 1716796800000,
+    "category": "Traffic",
+    "description": "Minibus taxi blocking traffic on Main Road, Sea Point.",
+    "location": "Main Road, Sea Point",
+    "fileName": null,
+    "timestamp": "2024-05-27T09:00:00.000Z",
+    "latitude": -33.915,
+    "longitude": 18.3888
+  },
+  {
+    "id": 1716798000000,
+    "category": "Outage",
+    "description": "Traffic lights are out at the Koeberg Interchange. Pointsmen on duty.",
+    "location": "Koeberg Interchange, Maitland",
+    "fileName": null,
+    "timestamp": "2024-05-27T09:20:00.000Z",
+    "latitude": -33.9175,
+    "longitude": 18.4833
+  },
+  {
+    "id": 1716799200000,
+    "category": "Environment",
+    "description": "Illegal dumping reported behind the Athlone stadium.",
+    "location": "Athlone, Cape Flats",
+    "fileName": "dumping_athlone.jpg",
+    "timestamp": "2024-05-27T09:40:00.000Z",
+    "latitude": -33.97,
+    "longitude": 18.5133
+  },
+  {
+    "id": 1716800400000,
+    "category": "Hazard",
+    "description": "Strong South-Easter wind blowing sand across Victoria Road in Camps Bay.",
+    "location": "Victoria Road, Camps Bay",
+    "fileName": null,
+    "timestamp": "2024-05-27T10:00:00.000Z",
+    "latitude": -33.9523,
+    "longitude": 18.3789
+  },
+  {
+    "id": 1716801600000,
+    "category": "Crime",
+    "description": "Pickpocketing activity reported at the V&A Waterfront food court.",
+    "location": "V&A Waterfront",
+    "fileName": null,
+    "timestamp": "2024-05-27T10:20:00.000Z",
+    "latitude": -33.9056,
+    "longitude": 18.4215
+  },
+  {
+    "id": 1716802800000,
+    "category": "Accident",
+    "description": "Cyclist hit by car on Chapman's Peak Drive. Road temporarily closed.",
+    "location": "Chapman's Peak Drive, Hout Bay",
+    "fileName": null,
+    "timestamp": "2024-05-27T10:40:00.000Z",
+    "latitude": -34.0833,
+    "longitude": 18.35
+  },
+  {
+    "id": 1716804000000,
+    "category": "Social",
+    "description": "Protest march starting from Keizersgracht Street towards Parliament.",
+    "location": "Keizersgracht Street, District Six",
+    "fileName": null,
+    "timestamp": "2024-05-27T11:00:00.000Z",
+    "latitude": -33.9295,
+    "longitude": 18.4285
+  },
+  {
+    "id": 1716805200000,
+    "category": "Traffic",
+    "description": "Road closures around Parliament due to protest action. Avoid the area.",
+    "location": "Parliament of South Africa, CBD",
+    "fileName": null,
+    "timestamp": "2024-05-27T11:20:00.000Z",
+    "latitude": -33.9271,
+    "longitude": 18.4191
+  },
+  {
+    "id": 1716806400000,
+    "category": "Infrastructure",
+    "description": "Burst water pipe on Long Street. Water flowing down the road.",
+    "location": "Long Street, CBD",
+    "fileName": "long_street_leak.mov",
+    "timestamp": "2024-05-27T11:40:00.000Z",
+    "latitude": -33.9229,
+    "longitude": 18.4177
+  },
+  {
+    "id": 1716807600000,
+    "category": "Hazard",
+    "description": "Baboon troop raiding bins in Murdoch Valley, Simon's Town.",
+    "location": "Murdoch Valley, Simon's Town",
+    "fileName": null,
+    "timestamp": "2024-05-27T12:00:00.000Z",
+    "latitude": -34.205,
+    "longitude": 18.45
+  },
+  {
+    "id": 1716808800000,
+    "category": "Outage",
+    "description": "Unplanned power outage affecting Claremont and Kenilworth.",
+    "location": "Claremont, Southern Suburbs",
+    "fileName": null,
+    "timestamp": "2024-05-27T12:20:00.000Z",
+    "latitude": -33.9806,
+    "longitude": 18.4659
+  },
+  {
+    "id": 1716810000000,
+    "category": "Accident",
+    "description": "Truck overturned on the N1 outbound near Century City interchange.",
+    "location": "N1 Highway, Century City",
+    "fileName": "N1_truck_accident.jpg",
+    "timestamp": "2024-05-27T12:40:00.000Z",
+    "latitude": -33.8916,
+    "longitude": 18.5085
+  },
+  {
+    "id": 1716811200000,
+    "category": "Traffic",
+    "description": "Severe traffic backup on N1 due to overturned truck. All lanes blocked.",
+    "location": "N1 near Sable Road",
+    "fileName": null,
+    "timestamp": "2024-05-27T13:00:00.000Z",
+    "latitude": -33.89,
+    "longitude": 18.51
+  },
+  {
+    "id": 1716812400000,
+    "category": "Lost & Found",
+    "description": "Lost sunglasses at Kirstenbosch Botanical Gardens near the canopy walk.",
+    "location": "Kirstenbosch Gardens",
+    "fileName": null,
+    "timestamp": "2024-05-27T13:20:00.000Z",
+    "latitude": -33.988,
+    "longitude": 18.4322
+  },
+  {
+    "id": 1716813600000,
+    "category": "Crime",
+    "description": "Suspicious individuals loitering around cars parked at Lion's Head trail base.",
+    "location": "Signal Hill Road",
+    "fileName": null,
+    "timestamp": "2024-05-27T13:40:00.000Z",
+    "latitude": -33.9351,
+    "longitude": 18.3934
+  },
+  {
+    "id": 1716814800000,
+    "category": "Environment",
+    "description": "Noise complaint due to loud construction at the Green Point stadium.",
+    "location": "Green Point",
+    "fileName": null,
+    "timestamp": "2024-05-27T14:00:00.000Z",
+    "latitude": -33.9038,
+    "longitude": 18.4101
+  },
+  {
+    "id": 1716816000000,
+    "category": "Hazard",
+    "description": "Fallen tree blocking one lane on Constantia Main Road.",
+    "location": "Constantia",
+    "fileName": "constantia_tree.jpg",
+    "timestamp": "2024-05-27T14:20:00.000Z",
+    "latitude": -34.0167,
+    "longitude": 18.4417
+  },
+  {
+    "id": 1716817200000,
+    "category": "Social",
+    "description": "Film shoot causing intermittent road closures on Adderley Street.",
+    "location": "Adderley Street, CBD",
+    "fileName": null,
+    "timestamp": "2024-05-27T14:40:00.000Z",
+    "latitude": -33.9234,
+    "longitude": 18.4228
+  },
+  {
+    "id": 1716818400000,
+    "category": "Outage",
+    "description": "Load shedding has started in the Bellville area.",
+    "location": "Bellville, Northern Suburbs",
+    "fileName": null,
+    "timestamp": "2024-05-27T15:00:00.000Z",
+    "latitude": -33.8974,
+    "longitude": 18.631
+  },
+  {
+    "id": 1756213815087,
+    "category": "Crime",
+    "description": "Rasta Protests",
+    "location": "",
+    "fileName": null,
+    "timestamp": "2025-08-26T13:10:15.087Z",
+    "latitude": -33.72386672184669,
+    "longitude": 18.993558883666996
   }
 ]

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet.markercluster";
 
@@ -41,18 +41,34 @@ export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Prop
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.TileLayer | null>(null);
   const markersRef = useRef<L.MarkerClusterGroup | null>(null);
+  const reportMarkerRef = useRef<L.Marker | null>(null);
   const reportsCacheRef = useRef<Record<string, Report[]>>({});
+  const [isClient, setIsClient] = useState(false);
 
   // Initialize map once
   useEffect(() => {
+    setIsClient(true);
+    
     if (!containerRef.current || mapRef.current) return;
 
     // Cape Town, South Africa coordinates: [-33.9249, 18.4241]
     const map = L.map(containerRef.current, {
       maxZoom: 18,
       minZoom: 3,
-      zoomControl: true
+      zoomControl: false, // We'll add custom controls
+      attributionControl: false // We'll add custom attribution
     }).setView([-33.9249, 18.4241], 13);
+    
+    // Add zoom controls in a better position
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(map);
+    
+    // Add attribution control
+    L.control.attribution({
+      position: 'bottomleft',
+      prefix: ''
+    }).addTo(map);
     mapRef.current = map;
 
     // Create marker cluster group
@@ -68,6 +84,28 @@ export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Prop
       if (onMapClick) {
         onMapClick(e.latlng.lat, e.latlng.lng);
       }
+      
+      // Remove existing report marker if it exists
+      if (reportMarkerRef.current) {
+        map.removeLayer(reportMarkerRef.current);
+      }
+      
+      // Add new marker at clicked location
+      const reportMarker = L.marker([e.latlng.lat, e.latlng.lng], {
+        draggable: true,
+        title: "Report location"
+      }).addTo(map);
+      
+      // Update marker position when dragged
+      reportMarker.on('dragend', function(event) {
+        const marker = event.target;
+        const position = marker.getLatLng();
+        if (onMapClick) {
+          onMapClick(position.lat, position.lng);
+        }
+      });
+      
+      reportMarkerRef.current = reportMarker;
     });
 
     // Load reports when map moves
@@ -157,13 +195,17 @@ export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Prop
         mapRef.current = null;
         layerRef.current = null;
         markersRef.current = null;
+        if (reportMarkerRef.current) {
+          reportMarkerRef.current.remove();
+          reportMarkerRef.current = null;
+        }
       }
     };
   }, []);
 
   // Update base layer on theme change
   useEffect(() => {
-    if (!mapRef.current || !layerRef.current) return;
+    if (!isClient || !mapRef.current || !layerRef.current) return;
 
     // Remove current layer
     mapRef.current.removeLayer(layerRef.current);
@@ -180,7 +222,12 @@ export default function LeafletMap({ darkMode, onMapClick, onLoadReports }: Prop
     
     layerRef.current = newLayer;
     newLayer.addTo(mapRef.current);
-  }, [darkMode]);
+  }, [darkMode, isClient]);
+
+  // Only render the map container on the client
+  if (!isClient) {
+    return <div ref={containerRef} style={{ height: "100%", width: "100%" }} />;
+  }
 
   return <div ref={containerRef} style={{ height: "100%", width: "100%" }} />;
 }

@@ -93,7 +93,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className={darkMode ? "dark bg-gray-950 text-gray-100" : "bg-gray-50 text-gray-800"}>
+    <div className={darkMode ? "dark bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"}>
       {/* Dark Mode Toggle */}
       <div className="fixed top-4 right-4 z-50">
         <Button variant="outline" size="icon" onClick={() => setDarkMode(!darkMode)}>
@@ -102,17 +102,17 @@ export default function HomePage() {
       </div>
 
       {/* Hero Section */}
-      <section className="text-center py-20 px-6 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-950">
+      <section className="text-center py-20 px-6 bg-gradient-to-b from-blue-100 to-white dark:from-gray-800 dark:to-gray-900">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
           <h1 className="text-5xl font-bold mb-4 flex justify-center items-center gap-2">
             <Shield className="w-10 h-10 text-blue-600" /> OpenSafetyMap
           </h1>
-          <p className="text-lg max-w-2xl mx-auto mb-6">
+          <p className="text-lg max-w-2xl mx-auto mb-6 text-gray-700 dark:text-gray-300">
             Crowdsourced, open-source safety incident map. A community-driven platform to
             report, view, and track safety-related issues on an interactive map.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg">Get Started</Button>
+            <Button size="lg" onClick={() => setOpen(true)}>Get Started</Button>
             <Button size="lg" variant="outline" onClick={toggleReportsPanel}>
               <List className="w-4 h-4 mr-2" />
               {showReportsPanel ? "Hide Reports" : "View Reports"}
@@ -126,25 +126,33 @@ export default function HomePage() {
         <h2 className="text-3xl font-bold mb-6 text-center">🗺️ Interactive Safety Map</h2>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Map Container */}
-          <div className="flex-1 h-96 lg:h-[600px] rounded-2xl overflow-hidden shadow-lg relative">
+          <div className="flex-1 h-96 lg:h-[600px] rounded-2xl overflow-hidden shadow-lg relative border-2 border-gray-300 dark:border-gray-700">
             <LeafletMap 
               darkMode={darkMode} 
               onMapClick={handleMapClick} 
               onLoadReports={handleLoadReports} 
             />
             {/* Click Instruction Overlay */}
-            <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 px-3 py-2 rounded-lg text-sm shadow">
+            <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 px-3 py-2 rounded-lg text-sm shadow-lg border border-gray-300 dark:border-gray-700">
               Click on map to set report location
             </div>
             {/* Reports Counter */}
-            <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 bg-opacity-80 dark:bg-opacity-80 px-3 py-2 rounded-lg text-sm shadow">
+            <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 px-3 py-2 rounded-lg text-sm shadow-lg border border-gray-300 dark:border-gray-700">
               {reports.length} reports in view
             </div>
+            {/* Floating Report Button */}
+            <Button
+              size="lg"
+              onClick={() => setOpen(true)}
+              className="absolute bottom-6 right-6 z-[1000] rounded-full p-4 shadow-lg bg-blue-600 text-white hover:bg-blue-700"
+            >
+              <Plus className="w-6 h-6" />
+            </Button>
           </div>
           
           {/* Reports Panel */}
           {showReportsPanel && (
-            <div className="w-full lg:w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 h-96 lg:h-[600px] overflow-y-auto">
+            <div className="w-full lg:w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 h-96 lg:h-[600px] overflow-y-auto border-2 border-gray-300 dark:border-gray-700">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-bold text-lg">Recent Reports</h3>
                 <Button variant="ghost" size="icon" onClick={toggleReportsPanel}>
@@ -160,16 +168,16 @@ export default function HomePage() {
                   </div>
                 ) : (
                   [...reports].reverse().map(report => (
-                    <div key={report.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <div key={report.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                       <div className="flex justify-between">
                         <span className="font-medium">{report.category}</span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           {new Date(report.timestamp).toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-sm mt-1 text-gray-700 dark:text-gray-300">{report.description}</p>
-                      <p className="text-xs mt-2 text-gray-500">{report.location}</p>
-                      <div className="text-xs mt-1 text-gray-400">
+                      <p className="text-sm mt-1 text-gray-800 dark:text-gray-200">{report.description}</p>
+                      <p className="text-xs mt-2 text-gray-600 dark:text-gray-400">{report.location}</p>
+                      <div className="text-xs mt-1 text-gray-500 dark:text-gray-500">
                         {report.latitude.toFixed(6)}, {report.longitude.toFixed(6)}
                       </div>
                     </div>
@@ -193,7 +201,7 @@ export default function HomePage() {
             { icon: Shield, title: "Privacy", text: "Report anonymously or with authentication." },
             { icon: Database, title: "Open Data", text: "All data licensed under CC BY 4.0." },
           ].map((f, i) => (
-            <Card key={i} className="shadow-sm">
+            <Card key={i} className="shadow-md hover:shadow-lg transition-shadow border-2 border-gray-200 dark:border-gray-700">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <f.icon className="w-10 h-10 text-blue-600 mb-4" />
                 <h3 className="font-semibold text-lg mb-2">{f.title}</h3>
@@ -205,7 +213,7 @@ export default function HomePage() {
       </section>
 
       {/* Roadmap */}
-      <section className="py-16 px-8 bg-gray-100 dark:bg-gray-900">
+      <section className="py-16 px-8 bg-gray-100 dark:bg-gray-800">
         <h2 className="text-3xl font-bold mb-10 text-center">🚀 Roadmap</h2>
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {[
@@ -226,12 +234,12 @@ export default function HomePage() {
               items: ["AI duplicate/fake report detection", "WhatsApp/SMS bot reporting", "Offline-first mobile app", "Predictive analytics"],
             },
           ].map((phase, i) => (
-            <Card key={i}>
+            <Card key={i} className="border-2 border-gray-300 dark:border-gray-700">
               <CardContent className="p-6">
-                <h3 className="font-bold text-xl mb-2">{phase.title}</h3>
+                <h3 className="font-bold text-xl mb-2 text-blue-600">{phase.title}</h3>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
                   {phase.items.map((item, j) => (
-                    <li key={j}>{item}</li>
+                    <li key={j} className="text-gray-700 dark:text-gray-300">{item}</li>
                   ))}
                 </ul>
               </CardContent>
@@ -250,43 +258,61 @@ export default function HomePage() {
         <Button variant="outline">View Contribution Guide</Button>
       </section>
 
-      {/* Floating Report Button */}
-      <Button
-        size="lg"
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-50 rounded-full p-4 shadow-lg bg-blue-600 text-white hover:bg-blue-700"
-      >
-        <Plus className="w-6 h-6" />
-      </Button>
+      
 
       {/* Report Incident Modal */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-md bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700">
           <DialogHeader>
-            <DialogTitle>Report an Incident</DialogTitle>
+            <DialogTitle className="text-gray-900 dark:text-white">Report an Incident</DialogTitle>
           </DialogHeader>
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <Input 
-              name="category" 
-              value={form.category} 
-              onChange={handleChange} 
-              placeholder="Category (e.g., Crime, Hazard, Outage)" 
-              required
-            />
+            <div>
+              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Incident Type</label>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  "Crime", 
+                  "Hazard", 
+                  "Outage", 
+                  "Protest", 
+                  "Accident", 
+                  "Other"
+                ].map((category) => (
+                  <Button
+                    key={category}
+                    type="button"
+                    variant={form.category === category ? "default" : "outline"}
+                    onClick={() => setForm({...form, category})}
+                    className="text-sm py-2"
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </div>
+              <Input 
+                name="category" 
+                value={form.category} 
+                onChange={handleChange} 
+                placeholder="Or specify a custom category" 
+                className="mt-2 border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              />
+            </div>
             <Textarea 
               name="description" 
               value={form.description} 
               onChange={handleChange} 
               placeholder="Description" 
               required
+              className="border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             />
             <Input 
               name="location" 
               value={form.location} 
               onChange={handleChange} 
               placeholder="Location details" 
+              className="border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             />
-            <div className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 p-3 rounded">
+            <div className="text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 p-3 rounded border border-gray-300 dark:border-gray-600">
               <p className="font-medium">Map Coordinates</p>
               <p>Latitude: {form.latitude.toFixed(6)}</p>
               <p>Longitude: {form.longitude.toFixed(6)}</p>
@@ -295,9 +321,10 @@ export default function HomePage() {
             <Input 
               type="file" 
               onChange={(e) => setFile((e.target as HTMLInputElement).files?.[0] ?? null)} 
+              className="border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             />
             <DialogFooter className="mt-4">
-              <Button type="submit">Submit Report</Button>
+              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">Submit Report</Button>
             </DialogFooter>
           </form>
         </DialogContent>

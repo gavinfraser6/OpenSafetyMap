@@ -4,30 +4,33 @@
  * https://github.com/Leaflet/Leaflet.markercluster
  */
 .marker-cluster-small {
-  background-color: rgba(181, 226, 140, 0.6);
+  background-color: rgba(181, 226, 140, 0.8);
 }
 .marker-cluster-small div {
-  background-color: rgba(110, 204, 57, 0.6);
+  background-color: rgba(110, 204, 57, 0.8);
 }
 
 .marker-cluster-medium {
-  background-color: rgba(241, 211, 87, 0.6);
+  background-color: rgba(241, 211, 87, 0.8);
 }
 .marker-cluster-medium div {
-  background-color: rgba(240, 194, 12, 0.6);
+  background-color: rgba(240, 194, 12, 0.8);
 }
 
 .marker-cluster-large {
-  background-color: rgba(253, 156, 115, 0.6);
+  background-color: rgba(253, 156, 115, 0.8);
 }
 .marker-cluster-large div {
-  background-color: rgba(241, 128, 23, 0.6);
+  background-color: rgba(241, 128, 23, 0.8);
 }
 
+/* Improved cluster styling for better visibility */
 .marker-cluster {
   background-clip: padding-box;
   border-radius: 20px;
-  opacity: 0.8;
+  opacity: 1;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .marker-cluster div {
   width: 30px;
@@ -36,7 +39,9 @@
   margin-top: 5px;
   text-align: center;
   border-radius: 15px;
-  font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font: 600 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 .marker-cluster span {
   line-height: 30px;
@@ -50,4 +55,50 @@
 .leaflet-container {
   width: 100%;
   height: 100%;
+}
+
+/* Improve marker visibility */
+.leaflet-marker-icon {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Improve popup styling */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.leaflet-popup-content {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.leaflet-popup-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.leaflet-popup-content p {
+  margin: 0 0 8px 0;
+}
+
+.leaflet-popup-content small {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Dark mode adjustments */
+.dark .leaflet-popup-content-wrapper {
+  background: #2d2d2d;
+  color: #fff;
+}
+
+.dark .leaflet-popup-content small {
+  color: #aaa;
+}
+
+.dark .leaflet-container {
+  background: #1a1a1a;
 }
