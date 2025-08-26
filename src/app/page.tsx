@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent, useEffect } from "react";
+import { useState, type ChangeEvent, type FormEvent, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { MapPin, Shield, Plus, X, List, Info } from "lucide-react";
@@ -44,6 +44,7 @@ export default function HomePage() {
   const [reports, setReports] = useState<Report[]>([]);
   const [locationSelected, setLocationSelected] = useState(false);
   const [loadingLocation, setLoadingLocation] = useState(true);
+  const mapRef = useRef<any>(null);
 
   // Get user's location on component mount
   useEffect(() => {
@@ -93,10 +94,29 @@ export default function HomePage() {
     data.append("longitude", form.longitude.toString());
     if (file) data.append("file", file);
 
-    await fetch("/api/report", {
+    const response = await fetch("/api/report", {
       method: "POST",
       body: data,
     });
+
+    if (response.ok) {
+      const result = await response.json();
+      if (result.report) {
+        // Add the new report to the local state immediately
+        setReports(prevReports => [...prevReports, result.report]);
+      }
+      
+      // Clear cache for the current map view and refresh reports
+      if (mapRef.current && mapRef.current.clearCacheForBounds) {
+        mapRef.current.clearCacheForBounds();
+        // Refresh after a short delay to ensure the report is saved
+        setTimeout(() => {
+          if (mapRef.current && mapRef.current.refreshReports) {
+            mapRef.current.refreshReports();
+          }
+        }, 500);
+      }
+    }
 
     setOpen(false);
     setForm({ 
@@ -144,6 +164,7 @@ export default function HomePage() {
       {/* Map Container - Full Screen */}
       <div className="absolute inset-0">
         <LeafletMap 
+          ref={mapRef}
           onMapClick={handleMapClick} 
           onLoadReports={handleLoadReports} 
           defaultLatitude={form.latitude}

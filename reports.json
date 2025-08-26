@@ -928,5 +928,45 @@
     "timestamp": "2025-08-26T14:05:22.663Z",
     "latitude": -33.72712370796317,
     "longitude": 18.99295806884766
+  },
+  {
+    "id": 1756217534933,
+    "category": "Accident",
+    "description": "Oops",
+    "location": "",
+    "fileName": null,
+    "timestamp": "2025-08-26T14:12:14.933Z",
+    "latitude": -33.731121154846946,
+    "longitude": 18.962917327880863
+  },
+  {
+    "id": 1756217670828,
+    "category": "Accident",
+    "description": "oops 2",
+    "location": "",
+    "fileName": null,
+    "timestamp": "2025-08-26T14:14:30.828Z",
+    "latitude": -33.77572287842559,
+    "longitude": 18.95673751831055
+  },
+  {
+    "id": 1756217772836,
+    "category": "Hazard",
+    "description": "Planes flying in and out",
+    "location": "",
+    "fileName": null,
+    "timestamp": "2025-08-26T14:16:12.836Z",
+    "latitude": -33.71120345644535,
+    "longitude": 19.025230407714847
+  },
+  {
+    "id": 1756217972929,
+    "category": "Outage",
+    "description": "No power",
+    "location": "",
+    "fileName": null,
+    "timestamp": "2025-08-26T14:19:32.929Z",
+    "latitude": -33.63870403946885,
+    "longitude": 19.00286078453064
   }
 ]
