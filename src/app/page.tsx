@@ -136,12 +136,12 @@ export default function HomePage() {
       </Button>
 
       {/* Reports Counter */}
-      <div className="absolute top-20 right-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 px-3 py-2 rounded-lg text-sm shadow-lg border border-gray-300 dark:border-gray-700 backdrop-blur-sm z-[1001]">
+      <div className="absolute top-20 right-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 px-3 py-2 rounded-lg text-sm shadow-lg border border-gray-300 dark:border-gray-700 backdrop-blur-sm z-[1001] text-gray-900 dark:text-gray-100">
         {reports.length} reports in view
       </div>
 
       {/* Click Instruction Overlay */}
-      <div className="absolute top-20 left-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 px-3 py-2 rounded-lg text-sm shadow-lg border border-gray-300 dark:border-gray-700 backdrop-blur-sm z-[1001]">
+      <div className="absolute top-20 left-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 px-3 py-2 rounded-lg text-sm shadow-lg border border-gray-300 dark:border-gray-700 backdrop-blur-sm z-[1001] text-gray-900 dark:text-gray-100">
         Click on map to set report location
       </div>
 
@@ -149,11 +149,11 @@ export default function HomePage() {
       {showReportsPanel && (
         <div className="absolute top-16 right-4 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 h-[calc(100vh-100px)] overflow-y-auto border-2 border-gray-300 dark:border-gray-700 z-[1001]">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-lg">Recent Reports</h3>
-            <Button variant="ghost" size="icon" onClick={toggleReportsPanel}>
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
+                <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">Recent Reports</h3>
+                <Button variant="ghost" size="icon" onClick={toggleReportsPanel}>
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
           <div className="space-y-3">
             {reports.length === 0 ? (
               <div className="text-center py-8">
