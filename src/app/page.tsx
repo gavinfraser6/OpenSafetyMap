@@ -414,7 +414,54 @@ export default function HomePage() {
                 <p className="text-xs mt-1 text-red-500">Please click on the map to select a location</p>
               )}
               {locationSelected && (
-                <p className="text-xs mt-1 text-green-500">Location selected - ready to submit</p>
+                <div className="mt-2">
+                  <p className="text-xs text-green-500 mb-2">Location selected - ready to submit</p>
+                  <div className="flex gap-2">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={() => {
+                        // Clear the marker
+                        setLocationSelected(false);
+                        // Reset to user's location or a default
+                        if (navigator.geolocation) {
+                          navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                              const { latitude, longitude } = position.coords;
+                              setForm(prev => ({
+                                ...prev,
+                                latitude,
+                                longitude
+                              }));
+                            },
+                            (error) => {
+                              // Fallback to default
+                              setForm(prev => ({
+                                ...prev,
+                                latitude: -33.9249,
+                                longitude: 18.4241
+                              }));
+                            }
+                          );
+                        } else {
+                          // Fallback to default
+                          setForm(prev => ({
+                            ...prev,
+                            latitude: -33.9249,
+                            longitude: 18.4241
+                          }));
+                        }
+                        // Also remove the marker from the map
+                        if (mapRef.current && mapRef.current.removePlacedMarker) {
+                          mapRef.current.removePlacedMarker();
+                        }
+                      }}
+                      className="text-xs"
+                    >
+                      Clear Marker
+                    </Button>
+                  </div>
+                </div>
               )}
             </div>
             <Input 

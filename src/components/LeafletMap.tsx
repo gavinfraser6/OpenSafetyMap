@@ -77,6 +77,12 @@ const LeafletMapComponent = ({
       if (mapRef.current) {
         mapRef.current.setView([latitude, longitude], 15);
       }
+    },
+    removePlacedMarker: () => {
+      if (mapRef.current && reportMarkerRef.current) {
+        mapRef.current.removeLayer(reportMarkerRef.current);
+        reportMarkerRef.current = null;
+      }
     }
   }));
 
@@ -217,6 +223,9 @@ const LeafletMapComponent = ({
         title: "Report location"
       }).addTo(map);
       
+      // Create a custom icon with a remove button
+      const removeButton = `<button id="remove-marker-btn" style="background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; position: absolute; top: -10px; right: -10px; font-weight: bold;">×</button>`;
+      
       // Update marker position when dragged
       reportMarker.on('dragend', function(event) {
         const marker = event.target;
@@ -224,6 +233,37 @@ const LeafletMapComponent = ({
         if (onMapClick) {
           onMapClick(position.lat, position.lng);
         }
+      });
+      
+      // Add remove button to marker
+      reportMarker.bindPopup(`
+        <div style="position: relative;">
+          <div>Report location</div>
+          ${removeButton}
+        </div>
+      `);
+      
+      // Add event listener for the remove button after popup is opened
+      reportMarker.on('popupopen', () => {
+        // Use setTimeout to ensure the DOM is updated
+        setTimeout(() => {
+          const removeBtn = document.getElementById('remove-marker-btn');
+          if (removeBtn) {
+            removeBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (reportMarkerRef.current) {
+                map.removeLayer(reportMarkerRef.current);
+                reportMarkerRef.current = null;
+                // Notify parent that marker was removed
+                if (onMapClick) {
+                  // Reset to default values or indicate no marker
+                  // This depends on how you want to handle it in the parent component
+                }
+              }
+            });
+          }
+        }, 100);
       });
       
       reportMarkerRef.current = reportMarker;
