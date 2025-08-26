@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { MapPin, Shield, Plus, X, List, Info } from "lucide-react";
@@ -42,6 +42,32 @@ export default function HomePage() {
   });
   const [file, setFile] = useState<File | null>(null);
   const [reports, setReports] = useState<Report[]>([]);
+  const [locationSelected, setLocationSelected] = useState(false);
+  const [loadingLocation, setLoadingLocation] = useState(true);
+
+  // Get user's location on component mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setForm(prev => ({
+            ...prev,
+            latitude,
+            longitude
+          }));
+          setLoadingLocation(false);
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+          setLoadingLocation(false);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser");
+      setLoadingLocation(false);
+    }
+  }, []);
 
   const handleMapClick = (lat: number, lng: number) => {
     setForm(prev => ({
@@ -49,6 +75,7 @@ export default function HomePage() {
       latitude: lat,
       longitude: lng
     }));
+    setLocationSelected(true);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -76,9 +103,10 @@ export default function HomePage() {
       category: "", 
       description: "", 
       location: "",
-      latitude: -33.9249,
-      longitude: 18.4241
+      latitude: form.latitude, // Keep current location as default
+      longitude: form.longitude
     });
+    setLocationSelected(false);
     setFile(null);
   };
 
@@ -118,6 +146,9 @@ export default function HomePage() {
         <LeafletMap 
           onMapClick={handleMapClick} 
           onLoadReports={handleLoadReports} 
+          defaultLatitude={form.latitude}
+          defaultLongitude={form.longitude}
+          loadingLocation={loadingLocation}
         />
       </div>
 
@@ -233,7 +264,12 @@ export default function HomePage() {
               <p className="font-medium">Map Coordinates</p>
               <p>Latitude: {form.latitude.toFixed(6)}</p>
               <p>Longitude: {form.longitude.toFixed(6)}</p>
-              <p className="text-xs mt-1">Click on the map to set the exact location</p>
+              {!locationSelected && (
+                <p className="text-xs mt-1 text-red-500">Please click on the map to select a location</p>
+              )}
+              {locationSelected && (
+                <p className="text-xs mt-1 text-green-500">Location selected - ready to submit</p>
+              )}
             </div>
             <Input 
               type="file" 
@@ -241,7 +277,13 @@ export default function HomePage() {
               className="border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
             />
             <DialogFooter className="mt-4">
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">Submit Report</Button>
+              <Button 
+                type="submit" 
+                className="bg-blue-600 hover:bg-blue-700"
+                disabled={!locationSelected}
+              >
+                {locationSelected ? "Submit Report" : "Select Location First"}
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

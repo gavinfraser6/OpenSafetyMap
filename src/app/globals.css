@@ -26,3 +26,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.dimmed-map {
+  filter: brightness(0.9) contrast(0.95);
+}

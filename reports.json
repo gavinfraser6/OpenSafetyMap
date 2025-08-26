@@ -918,5 +918,15 @@
     "timestamp": "2025-08-26T13:10:15.087Z",
     "latitude": -33.72386672184669,
     "longitude": 18.993558883666996
+  },
+  {
+    "id": 1756217122663,
+    "category": "Protest",
+    "description": "RASTAS ARE RAMPANT",
+    "location": "",
+    "fileName": null,
+    "timestamp": "2025-08-26T14:05:22.663Z",
+    "latitude": -33.72712370796317,
+    "longitude": 18.99295806884766
   }
 ]

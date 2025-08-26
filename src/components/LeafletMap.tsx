@@ -33,9 +33,18 @@ type Report = {
 type Props = {
   onMapClick?: (lat: number, lng: number) => void;
   onLoadReports?: (reports: Report[]) => void;
+  defaultLatitude?: number;
+  defaultLongitude?: number;
+  loadingLocation?: boolean;
 };
 
-export default function LeafletMap({ onMapClick, onLoadReports }: Props) {
+export default function LeafletMap({ 
+  onMapClick, 
+  onLoadReports,
+  defaultLatitude = -33.9249,
+  defaultLongitude = 18.4241,
+  loadingLocation = false
+}: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.TileLayer | null>(null);
@@ -43,6 +52,7 @@ export default function LeafletMap({ onMapClick, onLoadReports }: Props) {
   const reportMarkerRef = useRef<L.Marker | null>(null);
   const reportsCacheRef = useRef<Record<string, Report[]>>({});
   const [isClient, setIsClient] = useState(false);
+  const initialLocationSetRef = useRef(false);
 
   // Initialize map once
   useEffect(() => {
@@ -50,13 +60,16 @@ export default function LeafletMap({ onMapClick, onLoadReports }: Props) {
     
     if (!containerRef.current || mapRef.current) return;
 
-    // Cape Town, South Africa coordinates: [-33.9249, 18.4241]
+    // Initialize with default location
     const map = L.map(containerRef.current, {
       maxZoom: 18,
       minZoom: 3,
       zoomControl: true
-    }).setView([-33.9249, 18.4241], 13);
+    }).setView([defaultLatitude, defaultLongitude], 13);
     mapRef.current = map;
+
+    // Mark that we've set the initial location
+    initialLocationSetRef.current = true;
 
     // Create marker cluster group
     const markers = L.markerClusterGroup({
@@ -186,12 +199,20 @@ export default function LeafletMap({ onMapClick, onLoadReports }: Props) {
         }
       }
     };
-  }, []);
+  }, []); // Empty dependency array - only run once
+
+  // Update map view ONLY when initially loading user's location
+  useEffect(() => {
+    if (mapRef.current && !loadingLocation && !initialLocationSetRef.current) {
+      mapRef.current.setView([defaultLatitude, defaultLongitude], 13);
+      initialLocationSetRef.current = true;
+    }
+  }, [defaultLatitude, defaultLongitude, loadingLocation]);
 
   // Only render the map container on the client
   if (!isClient) {
-    return <div ref={containerRef} style={{ height: "100%", width: "100%" }} />;
+    return <div ref={containerRef} style={{ height: "100%", width: "100%" }} className="dimmed-map" />;
   }
 
-  return <div ref={containerRef} style={{ height: "100%", width: "100%" }} />;
+  return <div ref={containerRef} style={{ height: "100%", width: "100%" }} className="dimmed-map" />;
 }
