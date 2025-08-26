@@ -40,6 +40,8 @@ type Props = {
   defaultLongitude?: number;
   loadingLocation?: boolean;
   onRefreshReports?: () => void;
+  onResolveReport?: (reportId: number) => void;
+  onOpenReportsPanel?: () => void;
 };
 
 const LeafletMapComponent = ({ 
@@ -48,7 +50,9 @@ const LeafletMapComponent = ({
   defaultLatitude = -33.9249,
   defaultLongitude = 18.4241,
   loadingLocation = false,
-  onRefreshReports
+  onRefreshReports,
+  onResolveReport,
+  onOpenReportsPanel
 }: Props, ref: React.Ref<LeafletMapRef>) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -133,9 +137,36 @@ const LeafletMapComponent = ({
             <p>${report.description}</p>
             <p><small><strong>Location:</strong> ${report.location}</small></p>
             <p><small>${new Date(report.timestamp).toLocaleString()}</small></p>
+            <div class="mt-2 flex gap-2">
+              <button id="resolve-btn-${report.id}" class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600">
+                Resolve
+              </button>
+            </div>
           </div>
         `);
         markersRef.current?.addLayer(marker);
+        
+        // Add event listener for the resolve button after popup is opened
+        marker.on('popupopen', () => {
+          // Use setTimeout to ensure the DOM is updated
+          setTimeout(() => {
+            const resolveBtn = document.getElementById(`resolve-btn-${report.id}`);
+            if (resolveBtn) {
+              resolveBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // Open the reports panel if it's not already open
+                if (onOpenReportsPanel) {
+                  onOpenReportsPanel();
+                }
+                // Trigger the resolve action
+                if (onResolveReport) {
+                  onResolveReport(report.id);
+                }
+              });
+            }
+          }, 100);
+        });
       });
     
     // Re-add the report marker if it existed

@@ -237,6 +237,12 @@ export default function HomePage() {
           defaultLatitude={form.latitude}
           defaultLongitude={form.longitude}
           loadingLocation={loadingLocation}
+          onResolveReport={(reportId) => startResolvingReport(reportId)}
+          onOpenReportsPanel={() => {
+            if (!showReportsPanel) {
+              setShowReportsPanel(true);
+            }
+          }}
         />
       </div>
 
