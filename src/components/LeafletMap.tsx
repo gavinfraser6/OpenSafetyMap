@@ -29,6 +29,8 @@ type Report = {
   timestamp: string;
   latitude: number;
   longitude: number;
+  resolved?: boolean;
+  resolutionDescription?: string;
 };
 
 type Props = {
@@ -65,6 +67,11 @@ const LeafletMapComponent = ({
         const bounds = mapRef.current.getBounds();
         const boundsKey = `${bounds.getSouth().toFixed(4)}_${bounds.getWest().toFixed(4)}_${bounds.getNorth().toFixed(4)}_${bounds.getEast().toFixed(4)}`;
         delete reportsCacheRef.current[boundsKey];
+      }
+    },
+    navigateToLocation: (latitude: number, longitude: number) => {
+      if (mapRef.current) {
+        mapRef.current.setView([latitude, longitude], 15);
       }
     }
   }));
@@ -115,19 +122,21 @@ const LeafletMapComponent = ({
     // Clear other markers
     markersRef.current.clearLayers();
     
-    // Add new markers
-    reports.forEach((report: Report) => {
-      const marker = L.marker([report.latitude, report.longitude]);
-      marker.bindPopup(`
-        <div class="report-popup">
-          <h3><strong>${report.category}</strong></h3>
-          <p>${report.description}</p>
-          <p><small><strong>Location:</strong> ${report.location}</small></p>
-          <p><small>${new Date(report.timestamp).toLocaleString()}</small></p>
-        </div>
-      `);
-      markersRef.current?.addLayer(marker);
-    });
+    // Add new markers (excluding resolved reports)
+    reports
+      .filter(report => !report.resolved) // Don't show resolved reports
+      .forEach((report: Report) => {
+        const marker = L.marker([report.latitude, report.longitude]);
+        marker.bindPopup(`
+          <div class="report-popup">
+            <h3><strong>${report.category}</strong></h3>
+            <p>${report.description}</p>
+            <p><small><strong>Location:</strong> ${report.location}</small></p>
+            <p><small>${new Date(report.timestamp).toLocaleString()}</small></p>
+          </div>
+        `);
+        markersRef.current?.addLayer(marker);
+      });
     
     // Re-add the report marker if it existed
     if (reportMarker) {

@@ -20,6 +20,8 @@ type Report = {
   timestamp: string;
   latitude: number;
   longitude: number;
+  resolved?: boolean;
+  resolutionDescription?: string;
 };
 
 type FormState = { 
@@ -44,6 +46,8 @@ export default function HomePage() {
   const [reports, setReports] = useState<Report[]>([]);
   const [locationSelected, setLocationSelected] = useState(false);
   const [loadingLocation, setLoadingLocation] = useState(true);
+  const [resolvingReportId, setResolvingReportId] = useState<number | null>(null);
+  const [resolutionDescription, setResolutionDescription] = useState("");
   const mapRef = useRef<any>(null);
 
   // Get user's location on component mount
@@ -138,6 +142,69 @@ export default function HomePage() {
     setReports(loadedReports);
   };
 
+  const navigateToReport = (report: Report) => {
+    if (mapRef.current && mapRef.current.navigateToLocation) {
+      // Navigate to the report location
+      mapRef.current.navigateToLocation(report.latitude, report.longitude);
+      // Close the reports panel
+      setShowReportsPanel(false);
+    }
+  };
+
+  const startResolvingReport = (reportId: number) => {
+    setResolvingReportId(reportId);
+  };
+
+  const cancelResolvingReport = () => {
+    setResolvingReportId(null);
+    setResolutionDescription("");
+  };
+
+  const confirmResolveReport = async (reportId: number) => {
+    try {
+      const response = await fetch(`/api/report/${reportId}/resolve`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          resolutionDescription
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // Update the local state with the resolved report
+        setReports(prevReports => 
+          prevReports.map(report => 
+            report.id === reportId 
+              ? { ...report, resolved: true, resolutionDescription } 
+              : report
+          )
+        );
+        
+        // Refresh reports on the map to remove the resolved marker
+        if (mapRef.current) {
+          // Clear cache for current bounds
+          if (mapRef.current.clearCacheForBounds) {
+            mapRef.current.clearCacheForBounds();
+          }
+          // Refresh after a short delay to ensure the report is updated
+          setTimeout(() => {
+            if (mapRef.current && mapRef.current.refreshReports) {
+              mapRef.current.refreshReports();
+            }
+          }, 500);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to resolve report:", error);
+    } finally {
+      setResolvingReportId(null);
+      setResolutionDescription("");
+    }
+  };
+
   return (
     <div className="h-screen w-screen overflow-hidden">
       {/* Top Bar with Icons */}
@@ -184,7 +251,7 @@ export default function HomePage() {
 
       {/* Reports Counter */}
       <div className="absolute top-20 right-4 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 px-3 py-2 rounded-lg text-sm shadow-lg border border-gray-300 dark:border-gray-700 backdrop-blur-sm z-[1001] text-gray-900 dark:text-gray-100">
-        {reports.length} reports in view
+        {reports.filter(report => !report.resolved).length} reports in view
       </div>
 
       {/* Click Instruction Overlay */}
@@ -202,14 +269,17 @@ export default function HomePage() {
             </Button>
           </div>
           <div className="space-y-3">
-            {reports.length === 0 ? (
+            {reports.filter(report => !report.resolved).length === 0 ? (
               <div className="text-center py-8">
                 <MapPin className="w-12 h-12 mx-auto text-gray-400" />
                 <p className="text-gray-500 mt-2">No reports in current view</p>
                 <p className="text-gray-400 text-sm mt-1">Pan or zoom to load reports</p>
               </div>
             ) : (
-              [...reports].reverse().map(report => (
+              [...reports]
+                .filter(report => !report.resolved) // Filter out resolved reports
+                .reverse()
+                .map(report => (
                 <div key={report.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   <div className="flex justify-between">
                     <span className="font-medium">{report.category}</span>
@@ -222,6 +292,55 @@ export default function HomePage() {
                   <div className="text-xs mt-1 text-gray-500 dark:text-gray-500">
                     {report.latitude.toFixed(6)}, {report.longitude.toFixed(6)}
                   </div>
+                  <div className="flex justify-between mt-2">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={() => navigateToReport(report)}
+                      className="text-xs"
+                    >
+                      <MapPin className="w-3 h-3 mr-1" />
+                      Go to
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={() => startResolvingReport(report.id)}
+                      className="text-xs"
+                    >
+                      Resolve
+                    </Button>
+                  </div>
+                  
+                  {/* Resolution form */}
+                  {resolvingReportId === report.id && (
+                    <div className="mt-3 p-2 border border-gray-300 dark:border-gray-600 rounded">
+                      <Textarea
+                        value={resolutionDescription}
+                        onChange={(e) => setResolutionDescription(e.target.value)}
+                        placeholder="Describe how this was resolved..."
+                        className="text-xs mb-2"
+                        rows={2}
+                      />
+                      <div className="flex justify-end space-x-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          onClick={cancelResolvingReport}
+                          className="text-xs"
+                        >
+                          Cancel
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          onClick={() => confirmResolveReport(report.id)}
+                          className="text-xs"
+                        >
+                          Confirm
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))
             )}

@@ -14,6 +14,8 @@ type Report = {
   timestamp: string;
   latitude: number;
   longitude: number;
+  resolved?: boolean;
+  resolutionDescription?: string;
 };
 
 export async function POST(req: Request) {

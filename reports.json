@@ -917,7 +917,9 @@
     "fileName": null,
     "timestamp": "2025-08-26T13:10:15.087Z",
     "latitude": -33.72386672184669,
-    "longitude": 18.993558883666996
+    "longitude": 18.993558883666996,
+    "resolved": true,
+    "resolutionDescription": "Dont know, somehow"
   },
   {
     "id": 1756217122663,
@@ -937,7 +939,9 @@
     "fileName": null,
     "timestamp": "2025-08-26T14:12:14.933Z",
     "latitude": -33.731121154846946,
-    "longitude": 18.962917327880863
+    "longitude": 18.962917327880863,
+    "resolved": true,
+    "resolutionDescription": "This was somehow resolved."
   },
   {
     "id": 1756217670828,
